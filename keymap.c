@@ -19,13 +19,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * | ESC    |   1  |   2  |   3  |   4  |   5  |      |           |      |   6  |   7  |   8  |   9  |   0  |   `    |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * | TAB    |   Q  |   W  |   E  |   R  |   T  |  L1  |           |  L1  |   Y  |   U  |   I  |   O  |   P  |   \    |
+ * | TAB    |   Q  |   W  |   E  |   R  |   T  |  L1  |           |  L1  |   Y  |   U  |   I  |   O  |   P  |   -    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * | LCTRL  |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |    ; |   '    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * | LShift |   Z  |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |    / | RShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |   -  |   =  | LCTRL|  ALT | LGUI |                                       | RGUI |      |   [  |   ]  |      |
+ *   |   -  |   =  | LCTRL|  ALT | LGUI |                                       | RGUI |      |   [  |   ]  |   \  |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        | Copy | Paste|       |      | 1Pass|
@@ -48,12 +48,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
         // right hand 
         KC_RGHT,  KC_6,  KC_7,    KC_8,     KC_9,    KC_0,     KC_GRV,
-        TG(1),    KC_Y,  KC_U,    KC_I,     KC_O,    KC_P,     KC_BSLS,
+        TG(1),    KC_Y,  KC_U,    KC_I,     KC_O,    KC_P,     KC_DOWN,
                   KC_H,  KC_J,    KC_K,     KC_L,    KC_SCLN,  KC_QUOT,
         KC_NO,    KC_N,  KC_M,    KC_COMM,  KC_DOT,  KC_SLSH,  KC_RSFT,
-                         KC_RGUI, KC_NO,    KC_LBRC, KC_RBRC,  KC_NO,
+                         KC_RGUI, KC_NO,    KC_LBRC, KC_RBRC,  KC_BSLS,
 
-        KC_LALT, M(2),
+        M(2), M(3),
         KC_UP,
         KC_DOWN, KC_BSPC, KC_ENT
     ),
@@ -68,7 +68,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |  LShift |   %  |   ^  |   [  |   ]  |   ~  |      |           |      |   &  |   1  |   2  |   3  |   \  |        |
  * `---------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |   -   |   =  | CTRL |  ALT | LGUI |                                       | RGUI |    . |   0  |   =  |      |
+ *   |   -   |   =  | CTRL |  ALT | LGUI |                                       | RGUI |RCTRL |   0  |   =  |      |
  *   `-----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        |(TS)CP|(TS)PA|       |　　　 |1Pass |
@@ -120,7 +120,12 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
         break;
     case 2:
         if (record->event.pressed) {        
-            return MACRO(D(RGUI), T(BSLS), U(LGUI), END); // 1Pass
+            return MACRO(D(LALT), T(SPC), U(LALT), END); // 1Pass
+        }
+        break;
+    case 3:
+        if (record->event.pressed) {        
+            return MACRO(D(RGUI), T(BSLS), U(RGUI), END); // 1Pass
         }
         break;
     }
